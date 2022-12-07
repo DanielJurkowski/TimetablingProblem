@@ -35,4 +35,5 @@ def main():
     solution.compute_cost()
     print(solution.cost)
 
+
 main()
