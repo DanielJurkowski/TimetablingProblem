@@ -9,8 +9,8 @@ from src.data_structures.lesson_data_structures.group import Group
 from src.data_structures.lesson_data_structures.room import Room
 from src.data_structures.lesson_data_structures.subject import Subject
 from src.data_structures.lesson_data_structures.teacher import Teacher
-from src.optimization_functions.penalty_functions import free_periods_in_day, more_than_one_lesson, min_and_max_lessons_in_day, \
-    same_subject_in_day
+from src.optimization_functions.penalty_functions import more_than_one_lesson_groups, \
+    more_than_one_lesson_teachers_and_rooms, same_subject_in_day, free_periods_in_day_groups, free_periods_in_day_teachers, min_and_max_lessons_in_day_groups, min_and_max_lessons_in_day_teachers
 
 
 @dataclass
@@ -29,14 +29,23 @@ class Solution:
     cost = 0
 
     def compute_cost(self):
-        weight_free_periods = 1
-        weight_more_than_one_lesson = 1
-        weight_min_and_max_lessons_in_day = 1
-        weight_same_lesson_in_one_day = 1
+        weight_more_than_one_lesson_groups = 1
+        weight_more_than_one_lesson_teachers_and_rooms = 1
+        weight_same_subject_in_day = 1
+        weight_free_periods_in_day_groups = 1
+        weight_free_periods_in_day_teachers = 1
+        weight_min_and_max_lessons_in_day_groups = 1
+        weight_min_and_max_lessons_in_day_teachers = 1
 
-        cost = [free_periods_in_day(self, weight_free_periods), more_than_one_lesson(self, weight_more_than_one_lesson),
-                min_and_max_lessons_in_day(self, weight_min_and_max_lessons_in_day),
-                same_subject_in_day(self, weight_same_lesson_in_one_day)]
+        cost = [
+            more_than_one_lesson_groups(self, weight_more_than_one_lesson_groups),
+            more_than_one_lesson_teachers_and_rooms(self, weight_more_than_one_lesson_teachers_and_rooms),
+            same_subject_in_day(self, weight_same_subject_in_day),
+            free_periods_in_day_groups(self, weight_free_periods_in_day_groups),
+            free_periods_in_day_teachers(self, weight_free_periods_in_day_teachers),
+            min_and_max_lessons_in_day_groups(self, weight_min_and_max_lessons_in_day_groups),
+            min_and_max_lessons_in_day_teachers(self, weight_min_and_max_lessons_in_day_teachers)
+        ]
 
         self.cost = cost
 
@@ -57,7 +66,7 @@ class Solution:
             for key_subject, value_subject in self.subjects.items():
                 for times in range(value_subject.times_in_week):
                     room = rooms[random.randint(self.number_rooms)]
-                    teacher = teachers[value_subject.subject_teacher - 1]
+                    teacher = teachers[value_subject.subject_teacher]
                     period = random.randint(self.number_periods)
                     day = random.randint(self.number_days)
 

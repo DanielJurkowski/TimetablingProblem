@@ -1,11 +1,11 @@
 subject_id,subject_name,subject_teacher,times_in_week
-0,Język polski,1,4
-1,Język angielski,2,4
-2,Język niemiecki,3,2
-3,Wychowanie fizyczne,4,3
-4,Biologia,5,2
-5,Chemia,6,2
-6,Matematyka,7,5
-7,Geografia,8,2
-8,Informatyka,9,5
-9,Fizyka,10,4
+0,Język polski,0,4
+1,Język angielski,1,4
+2,Język niemiecki,2,2
+3,Wychowanie fizyczne,3,3
+4,Biologia,4,2
+5,Chemia,5,2
+6,Matematyka,6,5
+7,Geografia,7,2
+8,Informatyka,8,5
+9,Fizyka,9,4
