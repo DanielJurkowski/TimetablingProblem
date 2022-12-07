@@ -22,3 +22,5 @@ dla szkół średnich.
 #### 3. Struktura danych i postać rozwiązania
 
 ![image](resources/structure.png)
+
+Dodatkowo nauczyciele i sale posiadają macierze wolnych terminów, wymiary są takie same jak dla macierzy rozwiązania
