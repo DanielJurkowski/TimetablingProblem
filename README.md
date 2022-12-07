@@ -23,4 +23,4 @@ dla szkół średnich.
 
 ![image](resources/structure.png)
 
-Dodatkowo nauczyciele i sale posiadają macierze wolnych terminów, wymiary są takie same jak dla macierzy rozwiązania
+Dodatkowo nauczyciele i sale posiadają macierze wolnych terminów, wymiary są takie same jak dla macierzy rozwiązania.
