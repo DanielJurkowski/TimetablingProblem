@@ -34,13 +34,11 @@ def main():
     print(solution.check_if_solution_acceptable())
 
     # generate data frames of timetables from solutions
-
     data_frames_groups = {}
     for group_number in range(len(groups)):
         data_frames_groups[group_number] = pd.DataFrame(solution.solution_matrix[group_number],
                                                         columns=['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'])
 
         data_frames_groups[group_number].to_csv(f'data/generated/group_{group_number}.csv')
-
 
 main()

@@ -60,6 +60,9 @@ class Solution:
                         teacher.change_availability_matrix(self, group_index, period, day, False)
                         room.change_availability_matrix(self, group_index, period, day, False)
 
+            for teacher in range(self.number_teachers):
+                self.fix_double_lessons_for_teacher(teacher)
+
     def compute_cost(self):
         weight_more_than_one_lesson_groups = 1
         weight_same_subject_in_day = 1
@@ -109,6 +112,8 @@ class Solution:
             lessons_cell_destination[len(lessons_cell_destination)] = lesson_to_move
 
             self.solution_matrix[group][new_period][new_day] = lessons_cell_destination
+            self.move_teacher_availability(group, lesson_to_move, period, day, new_period, new_day)
+            self.move_room_availability(group, lesson_to_move, period, day, new_period, new_day)
 
     def swap_lessons(self, group: int, period_1: int, day_1: int, period_2: int, day_2: int):
         if self.solution_matrix[group][period_1][day_1] and self.solution_matrix[group][period_2][day_2]:
@@ -126,6 +131,8 @@ class Solution:
 
             self.solution_matrix[group][period_1][day_1] = lesson_cell_2
             self.solution_matrix[group][period_2][day_2] = lesson_cell_1
+            self.swap_teachers_availability(group, lesson_cell_1, period_1, day_1, lesson_cell_2, period_2, day_2)
+            self.swap_rooms_availability(group, lesson_cell_1, period_1, day_1, lesson_cell_2, period_2, day_2)
 
     def move_lesson_to_random_free(self, group: int, period: int, day: int):
         if self.solution_matrix[group][period][day]:
@@ -147,22 +154,56 @@ class Solution:
     # jeżeli nie to tak samo itd.
 
     # wip
+
+    # pokrywaja sie macierze count false_in_2d != count false_in_3d
+    # problem jest w tym ze kiedy przenosimy lekcje to moze zmienic w 2d na true/false gdzie dalszej grupie w macierzy
     def fix_double_lessons_for_teacher(self, teacher: int):
         teacher = self.teachers[teacher]
 
-        for group in range(self.number_groups):
+        for period in range(self.number_periods):
             for day in range(self.number_days):
-                for period in range(self.number_periods):
+                for group in range(self.number_groups):
                     first_lesson_appeared = False
 
                     if not first_lesson_appeared:
-                        if not teacher.availability_matrix[group][period][day]:
+                        if not teacher.availability_matrix_3d[group][period][day]:
                             first_lesson_appeared = True
 
-                    if first_lesson_appeared and not teacher.availability_matrix[group][period][day]:
-                        random_period = random.randint(self.number_periods)
-                        random_day = random.randint(self.number_days)
+                    if first_lesson_appeared and not teacher.availability_matrix_3d[group][period][day]:
+                        free_slot = np.argwhere(teacher.availability_matrix)
 
-                        while self.solution_matrix[group][random_period][random_day]:
-                            random_period = random.randint(self.number_periods)
-                            random_day = random.randint(self.number_days)
+                        free_slot_index = 0
+                        free_slot_period = free_slot[free_slot_index][0]
+                        free_slot_day = free_slot[free_slot_index][1]
+
+                        while self.solution_matrix[group][free_slot_period][free_slot_day]:
+                            free_slot_index += 1
+
+                            if free_slot_index < len(free_slot):
+                                free_slot_period = free_slot[free_slot_index][0]
+                                free_slot_day = free_slot[free_slot_index][1]
+
+                            else:
+                                self.move_lesson_to_random_free(group, period, day)
+                                self.fix_double_lessons_for_teacher(teacher.id)
+
+                        self.move_lesson(group, period, day, free_slot_period, free_slot_day)
+
+    def move_teacher_availability(self, group: int, lesson: Lesson, period: int, day: int, new_period: int,
+                                  new_day: int):
+        self.teachers[lesson.teacher.id].change_availability_matrix(self, group, period, day, True)
+        self.teachers[lesson.teacher.id].change_availability_matrix(self, group, new_period, new_day, False)
+
+    def swap_teachers_availability(self, group: int, lesson_1: Lesson, period_1: int, day_1: int, lesson_2: Lesson,
+                                   period_2: int, day_2: int):
+        self.move_teacher_availability(group, lesson_1, period_1, day_1, period_2, day_2)
+        self.move_teacher_availability(group, lesson_2, period_2, day_2, period_1, day_1)
+
+    def move_room_availability(self, group: int, lesson: Lesson, period: int, day: int, new_period: int, new_day: int):
+        self.rooms[lesson.room.id].change_availability_matrix(self, group, period, day, True)
+        self.rooms[lesson.room.id].change_availability_matrix(self, group, new_period, new_day, False)
+
+    def swap_rooms_availability(self, group: int, lesson_1: Lesson, period_1: int, day_1: int, lesson_2: Lesson,
+                                period_2: int, day_2: int):
+        self.move_room_availability(group, lesson_1, period_1, day_1, period_2, day_2)
+        self.move_room_availability(group, lesson_2, period_2, day_2, period_1, day_1)
