@@ -13,7 +13,7 @@ def more_than_one_lesson_same_subject_in_day_groups(solution, weight_more_than_o
 
                 if bool(solution.solution_matrix[group][period][day]):
                     for _, lesson in solution.solution_matrix[group][period][day].items():
-                        subjects_in_one_day.append(lesson.lesson_subject.subject_id)
+                        subjects_in_one_day.append(lesson.lesson_subject.id)
 
             set_subjects_in_one_day = set(subjects_in_one_day)
 
@@ -34,8 +34,8 @@ def more_than_one_lesson_teachers_and_rooms(solution, weight_teachers: int, weig
             for group in range(len(solution.groups)):
                 if bool(solution.solution_matrix[group][period][day]):
                     for _, lesson in solution.solution_matrix[group][period][day].items():
-                        teachers_in_one_period.append(lesson.lesson_teacher.teacher_id)
-                        rooms_in_one_period.append(lesson.lesson_room.room_id)
+                        teachers_in_one_period.append(lesson.lesson_teacher.id)
+                        rooms_in_one_period.append(lesson.lesson_room.id)
 
             set_teachers_in_one_period = set(teachers_in_one_period)
             set_rooms_in_one_period = set(rooms_in_one_period)

@@ -41,7 +41,7 @@ class Solution:
             for group_index, group in self.groups.items():
                 for _, subject in self.subjects.items():
                     for times in range(subject.times_in_week):
-                        teacher = self.teachers[subject.subject_teacher]
+                        teacher = self.teachers[subject.teacher]
 
                         room = self.rooms[random.randint(self.number_rooms)]
                         period = random.randint(self.number_periods)
@@ -57,8 +57,8 @@ class Solution:
                         if len(self.solution_matrix[group_index, period, day]) > 1:
                             self.move_lesson_to_random_free(group_index, period, day)
 
-                        teacher.change_availability_matrix(self, period, day, False)
-                        room.change_availability_matrix(self, period, day, False)
+                        teacher.change_availability_matrix(self, group_index, period, day, False)
+                        room.change_availability_matrix(self, group_index, period, day, False)
 
     def compute_cost(self):
         weight_more_than_one_lesson_groups = 1

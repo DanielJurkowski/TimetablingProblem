@@ -14,11 +14,11 @@ class Lesson:
     lesson_group: Group
 
     def __repr__(self):
-        repr = self.lesson_room.room_name + " | " + self.lesson_teacher.teacher_name + " | " + self.lesson_subject.subject_name
+        representation = self.lesson_room.name + " | " + self.lesson_teacher.name + " | " + self.lesson_subject.name
 
-        return repr
+        return representation
 
     def __str__(self):
-        str = self.lesson_room.room_name + " | " + self.lesson_teacher.teacher_name + " | " + self.lesson_subject.subject_name
+        string = self.lesson_room.name + " | " + self.lesson_teacher.name + " | " + self.lesson_subject.name
 
-        return str
+        return string
