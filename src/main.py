@@ -15,7 +15,7 @@ def main():
 
     # solution settings
     number_days = 5
-    number_periods = 12
+    number_periods = 14
 
     # create objects from files
     groups = group.groups_factory(groups_file_path)
@@ -35,7 +35,6 @@ def main():
 
     # generate data frames of timetables from solutions
 
-    # generate if solution is acceptable
     data_frames_groups = {}
     for group_number in range(len(groups)):
         data_frames_groups[group_number] = pd.DataFrame(solution.solution_matrix[group_number],

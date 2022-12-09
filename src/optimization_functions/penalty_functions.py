@@ -9,7 +9,7 @@ def more_than_one_lesson_same_subject_in_day_groups(solution, weight_more_than_o
 
             for period in range(solution.number_periods):
                 if len(solution.solution_matrix[group][period][day]) > 1:
-                    cost_same_subject += len(solution.solution_matrix[group][period][day])
+                    cost_more_than_one_lesson += len(solution.solution_matrix[group][period][day])
 
                 if bool(solution.solution_matrix[group][period][day]):
                     for _, lesson in solution.solution_matrix[group][period][day].items():
@@ -17,7 +17,7 @@ def more_than_one_lesson_same_subject_in_day_groups(solution, weight_more_than_o
 
             set_subjects_in_one_day = set(subjects_in_one_day)
 
-            cost_more_than_one_lesson += (len(subjects_in_one_day) - len(set_subjects_in_one_day))
+            cost_same_subject += (len(subjects_in_one_day) - len(set_subjects_in_one_day))
 
     return weight_more_than_one_lesson * cost_more_than_one_lesson, weight_same_subject * cost_same_subject
 
@@ -44,25 +44,6 @@ def more_than_one_lesson_teachers_and_rooms(solution, weight_teachers: int, weig
             cost_rooms += len(rooms_in_one_period) - len(set_rooms_in_one_period)
 
     return weight_teachers * cost_teachers, weight_rooms * cost_rooms
-
-
-def same_subject_in_day(solution, weight: int):
-    cost = 0
-
-    for group in range(solution.number_groups):
-        for day in range(solution.number_days):
-            subjects_in_one_day = []
-
-            for period in range(solution.number_periods):
-                if bool(solution.solution_matrix[group][period][day]):
-                    for _, lesson in solution.solution_matrix[group][period][day].items():
-                        subjects_in_one_day.append(lesson.lesson_subject.subject_id)
-
-            set_subjects_in_one_day = set(subjects_in_one_day)
-
-            cost += (len(subjects_in_one_day) - len(set_subjects_in_one_day))
-
-    return weight * cost
 
 
 def free_periods_min_and_max_lessons_in_day_groups(solution, weight_free_periods: int, weight_min_max_lessons: int):
