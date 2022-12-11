@@ -9,7 +9,7 @@ from src.data_structures.lesson_data_structures.group import Group
 from src.data_structures.lesson_data_structures.room import Room
 from src.data_structures.lesson_data_structures.subject import Subject
 from src.data_structures.lesson_data_structures.teacher import Teacher
-from src.optimization_functions.penalty_functions import more_than_one_lesson_same_subject_in_day_groups, \
+from src.cost_function.penalty_functions import more_than_one_lesson_same_subject_in_day_groups, \
     more_than_one_lesson_teachers_and_rooms, free_periods_min_and_max_lessons_in_day_teachers, \
     free_periods_min_and_max_lessons_in_day_groups
 
@@ -54,6 +54,7 @@ class Solution:
 
                         self.solution_matrix[group_index, period, day] = lessons_cell
 
+                        # dać to jako osobną funkcję naprawiającą?
                         if len(self.solution_matrix[group_index, period, day]) > 1:
                             self.move_lesson_to_random_free(group_index, period, day)
 
@@ -145,18 +146,12 @@ class Solution:
 
             self.move_lesson(group, period, day, random_period, random_day)
 
-    # do zrobienia tego potrzeba jednak macierzy 3d dla dostępności nauczycieli => funkcja kary do zmiany
-
-    # zamiar taki zeby sprawdzić czy dla danego terminu czy ma wiecej niz 1 lekcje, jezeli tak to przenosimy kazda
-    # kolejna w randomowe wolne takie gdzie nauczyciel ma wolny termin dla danej grupy
-    # jeżeli by zdarzyło się tak ze nauczyciel ma wolny termin ale w danym terminie wystepuje inna lekcja
-    # to przeniesienie tej lekcji do randomowego wolnego gdzie nauczyciel tej lekcji ma wolny termin wtedy co grupa
-    # jeżeli nie to tak samo itd.
-
-    # wip
-
-    # pokrywaja sie macierze count false_in_2d != count false_in_3d
-    # problem jest w tym ze kiedy przenosimy lekcje to moze zmienic w 2d na true/false gdzie dalszej grupie w macierzy
+    # funkcje naprawiające rozwiązanie do optymalnego lub zbliżające się do niego w sensie kosztu funkcji celu?
+    # przeniesienie w rand miejsce lekcji
+    # naprawienie terminów nauczycieli
+    # naprawienie dostępności sal
+    # naprawienie okienek
+    # przenieść to potem do heuristic_methods
     def fix_double_lessons_for_teacher(self, teacher: int):
         teacher = self.teachers[teacher]
 
