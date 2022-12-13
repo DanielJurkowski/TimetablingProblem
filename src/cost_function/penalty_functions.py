@@ -26,6 +26,9 @@ def more_than_one_lesson_teachers_and_rooms(solution, weight_teachers: int, weig
     cost_teachers = 0
     cost_rooms = 0
 
+    index_teacher = []
+    index_rooms = []
+
     for period in range(solution.number_periods):
         for day in range(solution.number_days):
             teachers_in_one_period = []

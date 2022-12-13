@@ -1,4 +1,5 @@
 import pandas as pd
+
 from data_structures.lesson_data_structures import group
 from data_structures.lesson_data_structures import room
 from data_structures.lesson_data_structures import subject
@@ -40,5 +41,6 @@ def main():
                                                         columns=['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'])
 
         data_frames_groups[group_number].to_csv(f'data/generated/group_{group_number}.csv')
+
 
 main()
