@@ -1,20 +1,12 @@
 from dataclasses import dataclass
-import numpy as np
 import pandas as pd
+from src.data_structures.lesson_data_structures.lesson_subobject import LessonSubobject
 
 
 @dataclass
-class Teacher:
-    teacher_id: int
-    teacher_name: str
-    availability_matrix: np.ndarray = None
-
-    def change_availability_matrix(self, solution, period, day, available=False):
-        if self.availability_matrix is None:
-            self.availability_matrix = np.empty((solution.number_periods, solution.number_days), dtype=bool)
-            self.availability_matrix[:] = True
-
-        self.availability_matrix[period][day] = available
+class Teacher(LessonSubobject):
+    def change_availability_matrix(self, solution, group: int, period: int, day: int, available: bool):
+        super().change_availability_matrix(solution, group, period, day, available)
 
 
 def teachers_factory(file_path: str):

@@ -4,9 +4,9 @@ import pandas as pd
 
 @dataclass
 class Subject:
-    subject_id: int
-    subject_name: str
-    subject_teacher: int
+    id: int
+    name: str
+    teacher: int
     times_in_week: int
 
 
