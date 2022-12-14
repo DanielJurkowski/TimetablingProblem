@@ -1,15 +1,15 @@
 ,Day 1,Day 2,Day 3,Day 4,Day 5
-0,{0: sala nr 11 | Lena Kowalska | Język angielski},{0: sala nr 2 | Katarzyna Mazur | Fizyka},{0: sala nr 2 | Dominik Kaczor | Informatyka},{},{}
-1,{},{0: sala nr 4 | Jan Nowak | Język polski},{0: sala nr 6 | Lena Kowalska | Język angielski},{0: sala nr 9 | Natalia Szymańska | Geografia},"{0: sala nr 3 | Karolina Kamińska | Chemia, 1: sala nr 2 | Katarzyna Mazur | Fizyka}"
-2,{0: sala nr 9 | Karolina Kamińska | Chemia},{},{},{},{}
-3,{},{},{},{},{0: sala nr 9 | Jan Nowak | Język polski}
-4,{0: sala nr 8 | Dominik Kaczor | Informatyka},{},{0: sala nr 3 | Lena Kowalska | Język angielski},{0: sala nr 8 | Natalia Szymańska | Geografia},{0: sala nr 5 | Jan Nowak | Język polski}
-5,{0: sala nr 4 | Lena Kowalska | Język angielski},{0: sala nr 4 | Dominik Kaczor | Informatyka},{},{},{0: sala nr 6 | Dominik Kaczor | Informatyka}
-6,{0: sala nr 9 | Paweł Lewandowski | Matematyka},{},{},{},{}
-7,{},{},{},{},{}
-8,{},{0: sala nr 5 | Piotr Wójcik | Biologia},{},{},{0: sala nr 3 | Mateusz Kowalski | Język niemiecki}
-9,{},{},{},"{0: sala nr 5 | Jan Nowak | Język polski, 1: sala nr 11 | Zofia Wiśniewska | Wychowanie fizyczne, 2: sala nr 4 | Piotr Wójcik | Biologia}",{}
-10,"{0: sala nr 2 | Zofia Wiśniewska | Wychowanie fizyczne, 1: sala nr 10 | Dominik Kaczor | Informatyka}",{},{},{0: sala nr 10 | Katarzyna Mazur | Fizyka},{}
-11,{},{0: sala nr 1 | Mateusz Kowalski | Język niemiecki},{},{0: sala nr 3 | Paweł Lewandowski | Matematyka},{}
-12,{0: sala nr 3 | Paweł Lewandowski | Matematyka},{},"{0: sala nr 9 | Zofia Wiśniewska | Wychowanie fizyczne, 1: sala nr 2 | Katarzyna Mazur | Fizyka}",{},{0: sala nr 9 | Paweł Lewandowski | Matematyka}
-13,{},{0: sala nr 5 | Paweł Lewandowski | Matematyka},{},{},{}
+0,{},{0: sala nr 3 | Dominik Kaczor | Informatyka},"{0: sala nr 8 | Lena Kowalska | Język angielski, 1: sala nr 5 | Karolina Kamińska | Chemia}",{},{0: sala nr 8 | Paweł Lewandowski | Matematyka}
+1,{},{},{},{},{}
+2,{},"{0: sala nr 5 | Jan Nowak | Język polski, 1: sala nr 3 | Dominik Kaczor | Informatyka}",{0: sala nr 7 | Jan Nowak | Język polski},{},{0: sala nr 8 | Paweł Lewandowski | Matematyka}
+3,{},{0: sala nr 5 | Mateusz Kowalski | Język niemiecki},{},{0: sala nr 11 | Lena Kowalska | Język angielski},{0: sala nr 2 | Piotr Wójcik | Biologia}
+4,{0: sala nr 6 | Paweł Lewandowski | Matematyka},"{0: sala nr 1 | Jan Nowak | Język polski, 1: sala nr 11 | Dominik Kaczor | Informatyka}","{0: sala nr 9 | Zofia Wiśniewska | Wychowanie fizyczne, 1: sala nr 10 | Paweł Lewandowski | Matematyka}",{},{0: sala nr 4 | Dominik Kaczor | Informatyka}
+5,{},{},{},{},"{0: sala nr 3 | Zofia Wiśniewska | Wychowanie fizyczne, 1: sala nr 2 | Katarzyna Mazur | Fizyka}"
+6,{},{},{},{},{}
+7,{0: sala nr 10 | Lena Kowalska | Język angielski},{},{},{},"{0: sala nr 4 | Natalia Szymańska | Geografia, 1: sala nr 10 | Dominik Kaczor | Informatyka}"
+8,{},"{0: sala nr 6 | Mateusz Kowalski | Język niemiecki, 1: sala nr 9 | Karolina Kamińska | Chemia}",{},{0: sala nr 5 | Zofia Wiśniewska | Wychowanie fizyczne},{0: sala nr 3 | Paweł Lewandowski | Matematyka}
+9,{0: sala nr 6 | Katarzyna Mazur | Fizyka},{},{0: sala nr 10 | Katarzyna Mazur | Fizyka},{},{}
+10,{},{},{},"{0: sala nr 7 | Lena Kowalska | Język angielski, 1: sala nr 8 | Katarzyna Mazur | Fizyka}",{}
+11,{},{},{},{},{}
+12,{},{},{0: sala nr 2 | Jan Nowak | Język polski},{},{}
+13,{},{0: sala nr 9 | Piotr Wójcik | Biologia},{},{0: sala nr 2 | Natalia Szymańska | Geografia},{}
