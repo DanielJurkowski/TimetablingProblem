@@ -1,6 +1,6 @@
 from copy import copy, deepcopy
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, List, Tuple
 
 import numpy as np
 import numpy.random as random
@@ -28,6 +28,7 @@ class Solution:
     number_teachers: int = 0
     number_rooms: int = 0
     solution_matrix: np.ndarray = None
+    cost_penalty_functions: List[Tuple] = None
     cost = 0
 
     def create_initial_solution(self):
@@ -60,17 +61,17 @@ class Solution:
             # self.improve_solution()
 
     def compute_cost(self):
-        weight_more_than_one_lesson_groups = 1
-        weight_same_subject_in_day = 1
+        weight_more_than_one_lesson_groups = 100
+        weight_same_subject_in_day = 10
 
-        weight_more_than_one_lesson_teachers = 1
-        weight_more_than_one_lesson_rooms = 1
+        weight_more_than_one_lesson_teachers = 100
+        weight_more_than_one_lesson_rooms = 100
 
-        weight_free_periods_in_day_groups = 1
-        weight_free_periods_in_day_teachers = 1
+        weight_free_periods_in_day_groups = 20
+        weight_min_and_max_lessons_in_day_groups = 20
 
-        weight_min_and_max_lessons_in_day_groups = 1
-        weight_min_and_max_lessons_in_day_teachers = 1
+        weight_free_periods_in_day_teachers = 10
+        weight_min_and_max_lessons_in_day_teachers = 10
 
         cost = [
             more_than_one_lesson_same_subject_in_day_groups(self, weight_more_than_one_lesson_groups,
@@ -83,13 +84,14 @@ class Solution:
                                                              weight_min_and_max_lessons_in_day_teachers)
         ]
 
-        self.cost = cost
+        self.cost_penalty_functions = cost
+        self.cost = sum([i + j for i, j in cost])
 
     def check_if_solution_acceptable(self):
 
-        more_than_one_lesson_groups = self.cost[0][0]
-        more_than_one_lesson_teachers = self.cost[1][0]
-        more_than_one_lesson_rooms = self.cost[1][1]
+        more_than_one_lesson_groups = self.cost_penalty_functions[0][0]
+        more_than_one_lesson_teachers = self.cost_penalty_functions[1][0]
+        more_than_one_lesson_rooms = self.cost_penalty_functions[1][1]
 
         if more_than_one_lesson_groups == 0 and more_than_one_lesson_teachers == 0 and more_than_one_lesson_rooms == 0:
             return True
@@ -244,8 +246,6 @@ class Solution:
                             free_slot_index = 0
                             free_slot_period = free_slot[free_slot_index][0]
                             free_slot_day = free_slot[free_slot_index][1]
-
-                            lesson = self.solution_matrix[group][free_slot_period][free_slot_day]
 
                             while self.solution_matrix[group][free_slot_period][free_slot_day]:
                                 free_slot_index += 1
