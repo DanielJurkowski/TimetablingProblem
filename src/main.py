@@ -42,7 +42,7 @@ def main():
     print("Initial best_solution cost: ", initial_solution_cost)
     print("Best best_solution cost: ", best_solution_cost)
     print("Iterations: ", current_iteration)
-    print("Is best best solution acceptable: ", best_solution.check_if_solution_acceptable())
+    print("Is best solution acceptable: ", best_solution.check_if_solution_acceptable())
 
     # generate data frames of timetables from solutions
     data_frames_groups_initial_solution = {}
