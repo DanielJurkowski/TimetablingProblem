@@ -61,17 +61,17 @@ class Solution:
             # self.improve_solution()
 
     def compute_cost(self):
-        weight_more_than_one_lesson_groups = 100
-        weight_same_subject_in_day = 10
+        weight_more_than_one_lesson_groups = 500
+        weight_same_subject_in_day = 50
 
-        weight_more_than_one_lesson_teachers = 100
-        weight_more_than_one_lesson_rooms = 100
+        weight_more_than_one_lesson_teachers = 500
+        weight_more_than_one_lesson_rooms = 500
 
-        weight_free_periods_in_day_groups = 20
-        weight_min_and_max_lessons_in_day_groups = 20
+        weight_free_periods_in_day_groups = 150
+        weight_min_and_max_lessons_in_day_groups = 250
 
-        weight_free_periods_in_day_teachers = 10
-        weight_min_and_max_lessons_in_day_teachers = 10
+        weight_free_periods_in_day_teachers = 25
+        weight_min_and_max_lessons_in_day_teachers = 25
 
         cost = [
             more_than_one_lesson_same_subject_in_day_groups(self, weight_more_than_one_lesson_groups,

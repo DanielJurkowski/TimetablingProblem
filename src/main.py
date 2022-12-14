@@ -31,16 +31,16 @@ def main():
     solution.create_initial_solution()
 
     # create simulated annealing object
-    simulated_annealing = SimulatedAnnealing(temperature_max=100, temperature_min=5, k_max=5, alpha=0.9999,
-                                             max_iterations=10e8, initial_solution=solution)
+    simulated_annealing = SimulatedAnnealing(temperature_max=150, temperature_min=5, k_max=5, alpha=0.99995,
+                                             max_iterations=10e6, initial_solution=solution)
 
     simulated_annealing.initialize_algorithm()
 
     initial_solution, best_solution, initial_solution_cost, best_solution_cost, current_iteration, temperature_chart, \
     cost_chart = simulated_annealing.start_algorithm()
 
-    print("Initial best_solution cost: ", initial_solution_cost)
-    print("Best best_solution cost: ", best_solution_cost)
+    print("Initial solution cost: ", initial_solution_cost)
+    print("Best solution cost: ", best_solution_cost)
     print("Iterations: ", current_iteration)
     print("Is best best solution acceptable: ", best_solution.check_if_solution_acceptable())
 
