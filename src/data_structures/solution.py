@@ -58,20 +58,18 @@ class Solution:
                         teacher.change_availability_matrix(self, group_index, period, day, False)
                         room.change_availability_matrix(self, group_index, period, day, False)
 
-            # self.improve_solution()
-
     def compute_cost(self):
         weight_more_than_one_lesson_groups = 500
-        weight_same_subject_in_day = 50
+        weight_same_subject_in_day = 70
 
         weight_more_than_one_lesson_teachers = 500
         weight_more_than_one_lesson_rooms = 500
 
-        weight_free_periods_in_day_groups = 150
-        weight_min_and_max_lessons_in_day_groups = 250
+        weight_free_periods_in_day_groups = 130
+        weight_min_and_max_lessons_in_day_groups = 70
 
-        weight_free_periods_in_day_teachers = 25
-        weight_min_and_max_lessons_in_day_teachers = 25
+        weight_free_periods_in_day_teachers = 40
+        weight_min_and_max_lessons_in_day_teachers = 30
 
         cost = [
             more_than_one_lesson_same_subject_in_day_groups(self, weight_more_than_one_lesson_groups,
@@ -187,7 +185,7 @@ class Solution:
         self.solution_matrix[group][period][day] = lesson
 
     # stworzenie sąsiada od obecnego rozwiązania poprzez wykonanie dwóch operacji
-    def neighborhood_creation(self):
+    def neighborhood_creation(self, swap=True):
         neighbor = deepcopy(self)
 
         group = random.randint(neighbor.number_groups)
@@ -201,23 +199,24 @@ class Solution:
 
         neighbor.move_lesson_to_random_free(group, period, day)
 
-        group = random.randint(neighbor.number_groups)
-        period = random.randint(neighbor.number_periods)
-        day = random.randint(neighbor.number_days)
-        new_period = random.randint(neighbor.number_periods)
-        new_day = random.randint(neighbor.number_days)
+        if swap:
+            group = random.randint(neighbor.number_groups)
+            period = random.randint(neighbor.number_periods)
+            day = random.randint(neighbor.number_days)
+            new_period = random.randint(neighbor.number_periods)
+            new_day = random.randint(neighbor.number_days)
 
-        while not neighbor.solution_matrix[group][period][day] or not \
-                neighbor.solution_matrix[group][new_period][new_day]:
-            if not neighbor.solution_matrix[group][period][day]:
-                period = random.randint(neighbor.number_periods)
-                day = random.randint(neighbor.number_days)
+            while not neighbor.solution_matrix[group][period][day] or not \
+                    neighbor.solution_matrix[group][new_period][new_day]:
+                if not neighbor.solution_matrix[group][period][day]:
+                    period = random.randint(neighbor.number_periods)
+                    day = random.randint(neighbor.number_days)
 
-            if not neighbor.solution_matrix[group][new_period][new_day]:
-                new_period = random.randint(neighbor.number_periods)
-                new_day = random.randint(neighbor.number_days)
+                if not neighbor.solution_matrix[group][new_period][new_day]:
+                    new_period = random.randint(neighbor.number_periods)
+                    new_day = random.randint(neighbor.number_days)
 
-        neighbor.swap_lessons(group, period, day, new_period, new_day)
+            neighbor.swap_lessons(group, period, day, new_period, new_day)
 
         return neighbor
 
