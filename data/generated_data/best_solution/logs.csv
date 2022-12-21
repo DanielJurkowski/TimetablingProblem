@@ -1,0 +1,12 @@
+,Value
+Max temperature,150
+Min temperature,5
+K max,20
+Alpha,0.99996
+Max iterations,10000000.0
+Neighbor with lesson swap,True
+Initial solution cost,99700
+Best solution cost,6120
+Iterations,85040
+Is best solution acceptable,True
+Runtime,299.9505834579468
