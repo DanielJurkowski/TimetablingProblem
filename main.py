@@ -17,7 +17,6 @@ def main():
     print('\033[31m', "\nFiles set up ready\n", '\033[0m')
 
     # number of days and periods
-    # hard setting, depends on csv files
     number_days = 5
     number_periods = 12
 
@@ -26,6 +25,7 @@ def main():
     solution.create_initial_solution()
 
     # create simulated annealing object
+    cooling_schedule = input_settings("cooling_schedule")
     temperature_max = input_settings("temperature_max")
     temperature_min = input_settings("temperature_min", temperature_max)
     k_max = input_settings("k_max")
@@ -38,7 +38,8 @@ def main():
 
     simulated_annealing = SimulatedAnnealing(temperature_max=temperature_max, temperature_min=temperature_min,
                                              k_max=k_max, alpha=alpha, max_iterations=max_iterations,
-                                             initial_solution=solution, swap=neighbor)
+                                             initial_solution=solution, swap=neighbor,
+                                             cooling_schedule=cooling_schedule)
 
     simulated_annealing.initialize_algorithm()
 
@@ -79,14 +80,14 @@ def main():
 
         data_frames_groups_best_solution[group_number].insert(0, 'Hours', hours)
 
-        data_frames_groups_best_solution[group_number].\
+        data_frames_groups_best_solution[group_number]. \
             to_excel(f'data/generated_data/best_solution/timetables/group_{group_number}.xlsx')
 
         adjust_excel(f'data/generated_data/best_solution/timetables/group_{group_number}.xlsx',
                      data_frames_groups_best_solution[group_number])
 
     logs = {'Value': [temperature_max, temperature_min, k_max, alpha, max_iterations,
-                      neighbor, initial_solution_cost, best_solution_cost, current_iteration,
+                      neighbor, cooling_schedule, initial_solution_cost, best_solution_cost, current_iteration,
                       best_solution.check_if_solution_acceptable(), runtime]}
 
     data_frame_logs = pd.DataFrame(logs, index=[
@@ -96,6 +97,7 @@ def main():
         'Alpha',
         'Max iterations',
         'Neighbor with lesson swap',
+        'Cooling schedule',
         'Initial solution cost',
         'Best solution cost',
         'Iterations',
@@ -112,4 +114,9 @@ def main():
     data_frame_best_cost.to_csv('data/generated_data/best_solution/charts_data/best_cost.csv', index=False)
 
 
-main()
+if __name__ == "__main__":
+    try:
+        main()
+
+    except KeyboardInterrupt:
+        print('\n\033[31m', "Keyboard Interrupt", '\033[0m')

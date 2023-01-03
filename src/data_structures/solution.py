@@ -59,17 +59,17 @@ class Solution:
                         room.change_availability_matrix(self, group_index, period, day, False)
 
     def compute_cost(self):
-        weight_more_than_one_lesson_groups = 500
-        weight_same_subject_in_day = 70
+        weight_more_than_one_lesson_groups = 975
+        weight_same_subject_in_day = 150
 
-        weight_more_than_one_lesson_teachers = 500
-        weight_more_than_one_lesson_rooms = 500
+        weight_more_than_one_lesson_teachers = 975
+        weight_more_than_one_lesson_rooms = 975
 
-        weight_free_periods_in_day_groups = 130
-        weight_min_and_max_lessons_in_day_groups = 70
+        weight_free_periods_in_day_groups = 500
+        weight_min_and_max_lessons_in_day_groups = 450
 
-        weight_free_periods_in_day_teachers = 40
-        weight_min_and_max_lessons_in_day_teachers = 30
+        weight_free_periods_in_day_teachers = 350
+        weight_min_and_max_lessons_in_day_teachers = 200
 
         cost = [
             more_than_one_lesson_same_subject_in_day_groups(self, weight_more_than_one_lesson_groups,

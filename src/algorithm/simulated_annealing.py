@@ -2,18 +2,14 @@ import math
 import time
 from dataclasses import dataclass
 from random import random
-from typing import Callable
 
 import numpy as np
 import tqdm
 
 from src.data_structures.solution import Solution
-
-CoolingSchedule = Callable[[float, float, int], float]
-
-
-def exponential_cooling_schedule(temperature: float, alpha: float, k: int) -> float:
-    return temperature * (alpha ** k)
+from src.algorithm.cooling_schedules.cooling_schedule import CoolingSchedule, exponential_cooling_schedule, \
+    linear_cooling_schedule, logarithmic_cooling_schedule, quadratic_cooling_schedule, \
+    boltzmann_cooling_schedule, cauchy_cooling_schedule
 
 
 @dataclass
@@ -40,7 +36,7 @@ class SimulatedAnnealing:
 
     swap: bool = True
 
-    cooling_schedule: CoolingSchedule = exponential_cooling_schedule
+    cooling_schedule: CoolingSchedule = None
 
     temperature_chart = []
     cost_chart = []
@@ -66,12 +62,33 @@ class SimulatedAnnealing:
         self.cost_chart.append(self.best_solution_cost)
 
     def start_algorithm(self):
-        range_iterations = np.ceil(
-            (math.log(self.temperature_min, 10) - math.log(self.temperature_max, 10)) /
-            math.log(self.alpha ** self.k_max, 10) * self.k_max)
+        if self.cooling_schedule is exponential_cooling_schedule:
+            range_iterations = np.ceil(
+                (math.log(self.temperature_min) - math.log(self.temperature_max)) /
+                math.log(self.alpha)) * self.k_max
+
+        if self.cooling_schedule is linear_cooling_schedule:
+            range_iterations = np.ceil((self.temperature_max - self.temperature_min) / self.alpha) * self.k_max
+
+        if self.cooling_schedule is logarithmic_cooling_schedule:
+            range_iterations = np.ceil(math.pow(math.e, (self.temperature_max - self.temperature_min) /
+                                                (self.alpha * self.temperature_min)) - 1) * self.k_max
+
+        if self.cooling_schedule is quadratic_cooling_schedule:
+            range_iterations = np.ceil(
+                (math.sqrt(self.temperature_max - self.temperature_min)/(math.sqrt(self.alpha) *
+                                                                         math.sqrt(self.temperature_min)))) * self.k_max
+
+        if self.cooling_schedule is boltzmann_cooling_schedule:
+            range_iterations = np.ceil(math.pow(math.e, self.temperature_max / self.temperature_min - 1)) * self.k_max
+
+        if self.cooling_schedule is cauchy_cooling_schedule:
+            range_iterations = np.ceil(self.temperature_max / self.temperature_min - 1) * self.k_max
+
         start_time = time.time()
         progress_bar = tqdm.tqdm(total=int(range_iterations))
 
+        temperature_iteration = 1
         while self.current_temperature > self.temperature_min and self.current_iteration < self.max_iterations:
             for _ in range(self.k_max):
                 self.new_solution = self.current_solution.neighborhood_creation(swap=self.swap)
@@ -104,8 +121,9 @@ class SimulatedAnnealing:
                 self.cost_chart.append(self.current_solution_cost)
                 progress_bar.update(1)
 
-            self.current_temperature = self.cooling_schedule(self.temperature_max, self.alpha, self.current_iteration)
+            self.current_temperature = self.cooling_schedule(self.temperature_max, self.alpha, temperature_iteration)
             self.temperature_chart.append(self.current_temperature)
+            temperature_iteration += 1
 
         end_time = time.time()
         runtime = end_time - start_time

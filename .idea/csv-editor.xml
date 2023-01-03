@@ -3,6 +3,27 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\data\generated_data\best_solution\charts_data\best_cost.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\data\generated_data\best_solution\charts_data\cost.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\data\generated_data\best_solution\charts_data\temperature.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\data\generated_data\best_solution\logs.csv">
           <value>
             <Attribute>
@@ -18,13 +39,6 @@
           </value>
         </entry>
         <entry key="\data\generated_data\initial_solution\timetables\group_3.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\data\generated_data\initial_solution\timetables\group_{group_number}.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
