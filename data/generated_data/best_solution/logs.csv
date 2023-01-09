@@ -1,12 +1,13 @@
 ,Value
-Max temperature,150
-Min temperature,5
-K max,20
-Alpha,0.99996
+Max temperature,200
+Min temperature,30
+K max,100
+Alpha,0.998
 Max iterations,10000000.0
 Neighbor with lesson swap,True
-Initial solution cost,99700
-Best solution cost,6120
-Iterations,85040
+Cooling schedule,<function exponential_cooling_schedule at 0x7f7f39854790>
+Initial solution cost,180025.0
+Best solution cost,13050.0
+Iterations,94800
 Is best solution acceptable,True
-Runtime,299.9505834579468
+Runtime,338.55676198005676

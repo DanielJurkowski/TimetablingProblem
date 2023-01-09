@@ -1,6 +1,8 @@
 import re
-import sys
-import os
+
+from src.algorithm.cooling_schedules.cooling_schedule import exponential_cooling_schedule, \
+    linear_cooling_schedule, logarithmic_cooling_schedule, quadratic_cooling_schedule, \
+    boltzmann_cooling_schedule, cauchy_cooling_schedule
 
 pattern = re.compile("^.*\.(csv)$")
 
@@ -175,7 +177,7 @@ def input_settings(setting: str, temperature_max=None, temperature_min=None, k_m
 
     if setting == "alpha":
         try:
-            alpha = input('\033[31m' + 'Alpha (default "0.9999"): ' + '\033[0m')
+            alpha = input('\033[31m' + 'Alpha (default "0.99"): ' + '\033[0m')
 
             while float(alpha) <= 0 or float(alpha) >= 1:
                 print('\033[31m', "Must be positive and less than one", '\033[0m')
@@ -188,8 +190,8 @@ def input_settings(setting: str, temperature_max=None, temperature_min=None, k_m
 
         except ValueError:
             if alpha == '':
-                print('\033[31m', "Alpha set to: ", '\033[0m', 0.9999)
-                return 0.9999
+                print('\033[31m', "Alpha set to: ", '\033[0m', 0.99)
+                return 0.99
 
             print('\033[31m', "Must be a number", '\033[0m')
             alpha = input_settings(setting)
@@ -220,10 +222,10 @@ def input_settings(setting: str, temperature_max=None, temperature_min=None, k_m
             return int(max_iterations)
 
     if setting == "neighbor":
-        neighbor = input('\033[31m' + 'Create neighbor with lesson swap (default "True"): ' + '\033[0m')
+        neighbor = input('\033[31m' + 'Create neighbor with lesson swap (default "False"): ' + '\033[0m')
 
         if neighbor == 'True':
-            print('\033[31m', "Create neighbor with lesson swap set to: ", '\033[0m', False)
+            print('\033[31m', "Create neighbor with lesson swap set to: ", '\033[0m', True)
             return True
 
         if neighbor == 'False':
@@ -231,9 +233,83 @@ def input_settings(setting: str, temperature_max=None, temperature_min=None, k_m
             return False
 
         if len(neighbor) == 0:
-            print('\033[31m', "Create neighbor with lesson swap set to: ", '\033[0m', True)
-            return True
+            print('\033[31m', "Create neighbor with lesson swap set to: ", '\033[0m', False)
+            return False
 
         else:
             print('\033[31m', "Must be a bool value", '\033[0m')
             input_settings(setting)
+
+    if setting == "cooling_schedule":
+        cooling_schedule = input('\033[31m' + 'Cooling schedule (default "exponential", enter "list" for other types): '
+                                 + '\033[0m')
+
+        if cooling_schedule == 'list':
+            print('\033[31m', "\n - exponential"
+                              "\n - linear"
+                              "\n - logarithmic (use low temperatures or alpha)"
+                              "\n - quadratic"
+                              "\n - boltzmann (use low temperatures)"
+                              "\n - cauchy\n", '\033[0m')
+
+            cooling_schedule = input(
+                '\033[31m' + 'Cooling schedule (default "exponential", enter "list" for other types): '
+                + '\033[0m')
+
+        if cooling_schedule == 'linear':
+            print('\033[31m', "Cooling schedule set to: ", '\033[0m', "linear")
+            return linear_cooling_schedule
+
+        if cooling_schedule == 'logarithmic':
+            print('\033[31m', "Cooling schedule set to: ", '\033[0m', "logarithmic")
+            return logarithmic_cooling_schedule
+
+        if cooling_schedule == 'quadratic':
+            print('\033[31m', "Cooling schedule set to: ", '\033[0m', "quadratic")
+            return quadratic_cooling_schedule
+
+        if cooling_schedule == 'boltzmann':
+            print('\033[31m', "Cooling schedule set to: ", '\033[0m', "boltzmann")
+            return boltzmann_cooling_schedule
+
+        if cooling_schedule == 'cauchy':
+            print('\033[31m', "Cooling schedule set to: ", '\033[0m', "cauchy")
+            return cauchy_cooling_schedule
+
+        if len(cooling_schedule) == 0 or cooling_schedule == 'exponential':
+            print('\033[31m', "Cooling schedule set to: ", '\033[0m', "exponential")
+            return exponential_cooling_schedule
+
+        else:
+            print('\033[31m', "Choose correct option", '\033[0m')
+            input_settings(setting)
+            return cooling_schedule
+
+    if setting == "test":
+        test_mode = input('\033[31m' + 'Do you want to enter testing mode? (default "No"): ' + '\033[0m')
+
+        while test_mode not in ['Yes', 'No', ""]:
+            test_mode = input('\033[31m' + "Choose correct option " + '\033[0m')
+
+        if test_mode == 'Yes':
+            print('\033[31m', 'You will enter a test mode. It will run tests to examine how well the algorithm works '
+                              'across three data sets (small/medium/large). It will use different parameters '
+                              '(also different neighborhood creation) and cooling schedules. Default test data '
+                              'are placed in "test/data" in folders "initial data" and "parameters". Results will be '
+                              'placed in "test/data/results". Max iterations for each test is 5000.\n', '\033[0m')
+
+            user_continue = input('\033[31m' + "Do you want to continue? " + '\033[0m')
+
+            while user_continue not in ['Yes', 'No']:
+                user_continue = input('\033[31m' + "Choose correct option " + '\033[0m')
+
+            if user_continue == 'Yes':
+                return True
+
+            else:
+                print('\033[31m', "\nYou will enter normal work mode\n", '\033[0m')
+                return False
+
+        if test_mode == 'No' or test_mode == "":
+            print('\033[31m', "You will enter normal work mode\n", '\033[0m')
+            return False

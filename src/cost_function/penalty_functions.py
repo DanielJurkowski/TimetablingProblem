@@ -119,8 +119,8 @@ def free_periods_min_and_max_lessons_in_day_teachers(solution, weight_free_perio
                     if lessons_start:
                         free_periods += 1
 
-            if lessons_in_day < 4:
-                cost_min_and_max_lessons += 4 - lessons_in_day
+            if lessons_in_day < 3:
+                cost_min_and_max_lessons += 3 - lessons_in_day
 
             if lessons_in_day > 8:
                 cost_min_and_max_lessons += lessons_in_day - 8
@@ -128,7 +128,7 @@ def free_periods_min_and_max_lessons_in_day_teachers(solution, weight_free_perio
             if free_periods > 2:
                 cost_free_periods += free_periods
 
-            else:
-                cost_free_periods += 0
+            if free_periods < 2:
+                cost_free_periods += 0.5 * free_periods
 
     return weight_free_periods * cost_free_periods, weight_min_max_lessons * cost_min_and_max_lessons
