@@ -1,4 +1,5 @@
 from copy import copy, deepcopy
+from copy import copy, deepcopy
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 
@@ -59,17 +60,17 @@ class Solution:
                         room.change_availability_matrix(self, group_index, period, day, False)
 
     def compute_cost(self):
-        weight_more_than_one_lesson_groups = 975
-        weight_same_subject_in_day = 150
+        weight_more_than_one_lesson_groups = 750
+        weight_same_subject_in_day = 100
 
-        weight_more_than_one_lesson_teachers = 975
-        weight_more_than_one_lesson_rooms = 975
+        weight_more_than_one_lesson_teachers = 750
+        weight_more_than_one_lesson_rooms = 750
 
-        weight_free_periods_in_day_groups = 500
-        weight_min_and_max_lessons_in_day_groups = 450
+        weight_free_periods_in_day_groups = 300
+        weight_min_and_max_lessons_in_day_groups = 300
 
-        weight_free_periods_in_day_teachers = 350
-        weight_min_and_max_lessons_in_day_teachers = 200
+        weight_free_periods_in_day_teachers = 125
+        weight_min_and_max_lessons_in_day_teachers = 125
 
         cost = [
             more_than_one_lesson_same_subject_in_day_groups(self, weight_more_than_one_lesson_groups,
@@ -219,57 +220,3 @@ class Solution:
             neighbor.swap_lessons(group, period, day, new_period, new_day)
 
         return neighbor
-
-    # znacząca poprawa rozwiązania poprzez poprawienie rozkładu zajęć przez usunięcie podwójnych
-    # lekcji dla grup, nauczycieli oraz sal, niestety nie obniża obecnie wartości funkcji kary do 0 dla sal oraz
-    # nauczycieli
-    def improve_solution(self):
-        for _, teacher in self.teachers.items():
-            for period in range(self.number_periods):
-                for day in range(self.number_days):
-                    for group in range(self.number_groups):
-                        # remove double lessons
-                        if len(self.solution_matrix[group, period, day]) > 1:
-                            self.move_lesson_to_random_free(group, period, day)
-
-                        # remove double lessons for teachers
-                        first_lesson_appeared = False
-
-                        if not first_lesson_appeared:
-                            if not teacher.availability_matrix_3d[group][period][day]:
-                                first_lesson_appeared = True
-
-                        if first_lesson_appeared and not teacher.availability_matrix_3d[group][period][day]:
-                            free_slot = np.argwhere(teacher.availability_matrix)
-
-                            free_slot_index = 0
-                            free_slot_period = free_slot[free_slot_index][0]
-                            free_slot_day = free_slot[free_slot_index][1]
-
-                            while self.solution_matrix[group][free_slot_period][free_slot_day]:
-                                free_slot_index += 1
-
-                                if free_slot_index < len(free_slot):
-                                    free_slot_period = free_slot[free_slot_index][0]
-                                    free_slot_day = free_slot[free_slot_index][1]
-
-                                else:
-                                    self.move_lesson_to_random_free(group, period, day)
-                                    self.improve_solution()
-
-                            self.move_lesson(group, period, day, free_slot_period, free_slot_day)
-
-        # remove double lessons for rooms
-        for _, room in self.rooms.items():
-            for period in range(self.number_periods):
-                for day in range(self.number_days):
-                    for group in range(self.number_groups):
-                        # remove double lessons for rooms
-                        first_lesson_appeared = False
-
-                        if not first_lesson_appeared:
-                            if not room.availability_matrix_3d[group][period][day]:
-                                first_lesson_appeared = True
-
-                        if first_lesson_appeared and not room.availability_matrix_3d[group][period][day]:
-                            self.change_room_to_random_free(group, period, day)

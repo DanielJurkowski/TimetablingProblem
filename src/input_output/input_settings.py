@@ -247,7 +247,7 @@ def input_settings(setting: str, temperature_max=None, temperature_min=None, k_m
         if cooling_schedule == 'list':
             print('\033[31m', "\n - exponential"
                               "\n - linear"
-                              "\n - logarithmic (use low temperatures and alpha)"
+                              "\n - logarithmic (use low temperatures or alpha)"
                               "\n - quadratic"
                               "\n - boltzmann (use low temperatures)"
                               "\n - cauchy\n", '\033[0m')
@@ -284,3 +284,32 @@ def input_settings(setting: str, temperature_max=None, temperature_min=None, k_m
             print('\033[31m', "Choose correct option", '\033[0m')
             input_settings(setting)
             return cooling_schedule
+
+    if setting == "test":
+        test_mode = input('\033[31m' + 'Do you want to enter testing mode? (default "No"): ' + '\033[0m')
+
+        while test_mode not in ['Yes', 'No', ""]:
+            test_mode = input('\033[31m' + "Choose correct option " + '\033[0m')
+
+        if test_mode == 'Yes':
+            print('\033[31m', 'You will enter a test mode. It will run tests to examine how well the algorithm works '
+                              'across three data sets (small/medium/large). It will use different parameters '
+                              '(also different neighborhood creation) and cooling schedules. Default test data '
+                              'are placed in "test/data" in folders "initial data" and "parameters". Results will be '
+                              'placed in "test/data/results". Max iterations for each test is 5000.\n', '\033[0m')
+
+            user_continue = input('\033[31m' + "Do you want to continue? " + '\033[0m')
+
+            while user_continue not in ['Yes', 'No']:
+                user_continue = input('\033[31m' + "Choose correct option " + '\033[0m')
+
+            if user_continue == 'Yes':
+                return True
+
+            else:
+                print('\033[31m', "\nYou will enter normal work mode\n", '\033[0m')
+                return False
+
+        if test_mode == 'No' or test_mode == "":
+            print('\033[31m', "You will enter normal work mode\n", '\033[0m')
+            return False

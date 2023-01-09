@@ -26,3 +26,23 @@ def boltzmann_cooling_schedule(temperature: float, alpha: float, k: int) -> floa
 
 def cauchy_cooling_schedule(temperature: float, alpha: float, k: int) -> float:
     return temperature / (1 + k)
+
+
+def pick_cooling_schedule(cooling_schedule: str):
+    if cooling_schedule == 'linear':
+        return linear_cooling_schedule
+
+    if cooling_schedule == 'logarithmic':
+        return logarithmic_cooling_schedule
+
+    if cooling_schedule == 'quadratic':
+        return quadratic_cooling_schedule
+
+    if cooling_schedule == 'boltzmann':
+        return boltzmann_cooling_schedule
+
+    if cooling_schedule == 'cauchy':
+        return cauchy_cooling_schedule
+
+    if len(cooling_schedule) == 0 or cooling_schedule == 'exponential':
+        return exponential_cooling_schedule

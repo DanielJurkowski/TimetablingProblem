@@ -6,10 +6,10 @@ from random import random
 import numpy as np
 import tqdm
 
-from src.data_structures.solution import Solution
 from src.algorithm.cooling_schedules.cooling_schedule import CoolingSchedule, exponential_cooling_schedule, \
     linear_cooling_schedule, logarithmic_cooling_schedule, quadratic_cooling_schedule, \
     boltzmann_cooling_schedule, cauchy_cooling_schedule
+from src.data_structures.solution import Solution
 
 
 @dataclass
@@ -76,8 +76,9 @@ class SimulatedAnnealing:
 
         if self.cooling_schedule is quadratic_cooling_schedule:
             range_iterations = np.ceil(
-                (math.sqrt(self.temperature_max - self.temperature_min)/(math.sqrt(self.alpha) *
-                                                                         math.sqrt(self.temperature_min)))) * self.k_max
+                (math.sqrt(self.temperature_max - self.temperature_min) / (math.sqrt(self.alpha) *
+                                                                           math.sqrt(
+                                                                               self.temperature_min)))) * self.k_max
 
         if self.cooling_schedule is boltzmann_cooling_schedule:
             range_iterations = np.ceil(math.pow(math.e, self.temperature_max / self.temperature_min - 1)) * self.k_max
@@ -96,9 +97,6 @@ class SimulatedAnnealing:
                 self.new_solution_cost = self.new_solution.cost
 
                 delta = self.new_solution_cost - self.current_solution_cost
-
-                # dodać heurestyke, jeżeli przez n iteracji (pare tysięcy) wartość się nie poprawiła o daną stała
-                # to wykonujemy metody poprawy danego rozwiazania
 
                 if delta <= 0:
                     self.current_solution = self.new_solution
@@ -129,4 +127,4 @@ class SimulatedAnnealing:
         runtime = end_time - start_time
 
         return self.initial_solution, self.best_solution, self.initial_solution_cost, self.best_solution_cost, \
-               self.current_iteration, self.temperature_chart, self.cost_chart, self.best_cost_chart, runtime
+               self.current_iteration, self.temperature_chart, self.cost_chart, self.best_cost_chart, runtime, range_iterations

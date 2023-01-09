@@ -1,0 +1,8 @@
+parametr,value
+cooling_schedule,exponential
+temperature_max,150
+temperature_min,5
+k_max,20
+alpha,0.99
+max_iterations,5000
+neighbor,TRUE
