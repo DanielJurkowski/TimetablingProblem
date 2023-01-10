@@ -20,14 +20,14 @@ def main():
 
     # test mode
     if test_mode:
-        for directory in os.listdir("test/data/initial_data"):
+        for directory in os.listdir("tests/data/initial_data"):
             groups = None
             rooms = None
             subjects = None
             teachers = None
 
-            for filename in os.listdir("test/data/initial_data/" + directory):
-                path = "test/data/initial_data/" + directory + "/" + filename
+            for filename in os.listdir("tests/data/initial_data/" + directory):
+                path = "tests/data/initial_data/" + directory + "/" + filename
 
                 # create objects for each size of data sets
                 if filename == "data.ipynb":
@@ -46,8 +46,8 @@ def main():
                     if filename == "teachers.csv":
                         teachers = teacher.teachers_factory(path)
 
-            for filename in os.listdir("test/data/parameters"):
-                path = "test/data/parameters/" + filename
+            for filename in os.listdir("tests/data/parameters"):
+                path = "tests/data/parameters/" + filename
 
                 if filename == 'parameters.ipynb':
                     pass
@@ -82,7 +82,7 @@ def main():
                     temperature_chart, cost_chart, best_cost_chart, runtime, range_iterations = simulated_annealing.start_algorithm()
 
                     try:
-                        results = pd.read_excel(f'test/results/{directory}.xlsx', index_col=0)
+                        results = pd.read_excel(f'tests/results/{directory}.xlsx', index_col=0)
 
                     except FileNotFoundError:
                         logs = {f'{filename}': [temperature_max, temperature_min, k_max, alpha, max_iterations,
@@ -108,7 +108,7 @@ def main():
                             '% of completion'
                         ])
 
-                        results.to_excel(f'test/results/{directory}.xlsx')
+                        results.to_excel(f'tests/results/{directory}.xlsx')
 
                     results[f'{filename}'] = [temperature_max, temperature_min, k_max, alpha, max_iterations,
                                               neighbor, cooling_schedule, initial_solution_cost, best_solution_cost,
@@ -116,7 +116,7 @@ def main():
                                               best_solution.check_if_solution_acceptable(), runtime, range_iterations,
                                               current_iteration / range_iterations]
 
-                    results.to_excel(f'test/results/{directory}.xlsx')
+                    results.to_excel(f'tests/results/{directory}.xlsx')
 
     # normal mode
     else:
