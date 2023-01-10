@@ -87,9 +87,8 @@ def main():
                     except FileNotFoundError:
                         logs = {f'{filename}': [temperature_max, temperature_min, k_max, alpha, max_iterations,
                                                 neighbor, cooling_schedule, initial_solution_cost, best_solution_cost,
-                                                current_iteration,
-                                                best_solution.check_if_solution_acceptable(), runtime, range_iterations,
-                                                float(current_iteration / range_iterations)]}
+                                                current_iteration, best_solution.check_if_solution_acceptable(),
+                                                runtime, range_iterations, float(current_iteration / range_iterations)]}
 
                         results = pd.DataFrame(logs, index=[
                             'Max temperature',
@@ -112,9 +111,8 @@ def main():
 
                     results[f'{filename}'] = [temperature_max, temperature_min, k_max, alpha, max_iterations,
                                               neighbor, cooling_schedule, initial_solution_cost, best_solution_cost,
-                                              current_iteration,
-                                              best_solution.check_if_solution_acceptable(), runtime, range_iterations,
-                                              current_iteration / range_iterations]
+                                              current_iteration, best_solution.check_if_solution_acceptable(),
+                                              runtime, range_iterations, float(current_iteration / range_iterations)]
 
                     results.to_excel(f'tests/results/{directory}.xlsx')
 
